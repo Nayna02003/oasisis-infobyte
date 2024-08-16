@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        input[type="number"] {
+            width: 80%;
+            padding: 10px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            width: 80%;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1.2rem;
+            background: #ff7e67;
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            width: 80%;
+        }
+
+        button:hover {
+            background: #ff4f2d;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Temperature Converter</h1>
+        <input type="number" id="inputValue" placeholder="Enter value" />
+        <select id="inputUnit">
+            <option value="celsius">Celsius</option>
+            <option value="fahrenheit">Fahrenheit</option>
+            <option value="kelvin">Kelvin</option>
+        </select>
+        <select id="outputUnit">
+            <option value="celsius">Celsius</option>
+            <option value="fahrenheit">Fahrenheit</option>
+            <option value="kelvin">Kelvin</option>
+        </select>
+        <button onclick="convertTemperature()">Convert</button>
+        <div class="result" id="result">Result: </div>
+    </div>
+
+    <script>
+        function convertTemperature() {
+            const inputValue = parseFloat(document.getElementById('inputValue').value);
+            const inputUnit = document.getElementById('inputUnit').value;
+            const outputUnit = document.getElementById('outputUnit').value;
+            let result;
+
+            if (isNaN(inputValue)) {
+                alert("Please enter a valid number");
+                return;
+            }
+
+            // Conversion logic
+            if (inputUnit === outputUnit) {
+                result = inputValue;
+            } else if (inputUnit === "celsius") {
+                if (outputUnit === "fahrenheit") {
+                    result = (inputValue * 9/5) + 32;
+                } else if (outputUnit === "kelvin") {
+                    result = inputValue + 273.15;
+                }
+            } else if (inputUnit === "fahrenheit") {
+                if (outputUnit === "celsius") {
+                    result = (inputValue - 32) * 5/9;
+                } else if (outputUnit === "kelvin") {
+                    result = (inputValue - 32) * 5/9 + 273.15;
+                }
+            } else if (inputUnit === "kelvin") {
+                if (outputUnit === "celsius") {
+                    result = inputValue - 273.15;
+                } else if (outputUnit === "fahrenheit") {
+                    result = (inputValue - 273.15) * 9/5 + 32;
+                }
+            }
+
+            document.getElementById('result').innerHTML = `Result: ${result.toFixed(2)} ${outputUnit.charAt(0).toUpperCase() + outputUnit.slice(1)}`;
+        }
+    </script>
+</body>
+</html>
